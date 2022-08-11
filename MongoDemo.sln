@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30804.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDemo.WebApi", "MongoDemo.WebApi\MongoDemo.WebApi.csproj", "{04C3B4EB-D87B-4689-A971-8E451859B616}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDemo.WebApi", "MongoDemo.WebApi\MongoDemo.WebApi.csproj", "{60DD50F5-8883-4C69-BA40-12A07E6ED71D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDemo.MediatorHandlers", "MongoDemo.MediatorHandlers\MongoDemo.MediatorHandlers.csproj", "{087C4592-4C99-43D1-9A0B-E72B2C1C1084}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDemo.Data", "MongoDemo.Data\MongoDemo.Data.csproj", "{3170ED7A-184E-4628-90B7-BAB524106925}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{04C3B4EB-D87B-4689-A971-8E451859B616}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{04C3B4EB-D87B-4689-A971-8E451859B616}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{04C3B4EB-D87B-4689-A971-8E451859B616}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{04C3B4EB-D87B-4689-A971-8E451859B616}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60DD50F5-8883-4C69-BA40-12A07E6ED71D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60DD50F5-8883-4C69-BA40-12A07E6ED71D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60DD50F5-8883-4C69-BA40-12A07E6ED71D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60DD50F5-8883-4C69-BA40-12A07E6ED71D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{087C4592-4C99-43D1-9A0B-E72B2C1C1084}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{087C4592-4C99-43D1-9A0B-E72B2C1C1084}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{087C4592-4C99-43D1-9A0B-E72B2C1C1084}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{087C4592-4C99-43D1-9A0B-E72B2C1C1084}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3170ED7A-184E-4628-90B7-BAB524106925}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3170ED7A-184E-4628-90B7-BAB524106925}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3170ED7A-184E-4628-90B7-BAB524106925}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3170ED7A-184E-4628-90B7-BAB524106925}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

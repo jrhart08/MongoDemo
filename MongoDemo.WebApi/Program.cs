@@ -1,11 +1,12 @@
-using Microsoft.AspNetCore.Hosting;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using MongoDB.Driver;
+using MongoDemo.Data;
+using MongoDemo.MediatorHandlers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MongoDemo.WebApi
 {
@@ -13,14 +14,55 @@ namespace MongoDemo.WebApi
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var builder = WebApplication.CreateBuilder(args);
+
+            AddWebApi(builder);
+            AddMediatR(builder);
+            AddMongo(builder);
+
+            var app = builder.Build();
+
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
+            app.UseHttpsRedirection();
+
+            app.UseAuthorization();
+
+
+            app.MapControllers();
+
+            app.Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+        static void AddMongo(WebApplicationBuilder builder)
+        {
+            builder.Services.AddSingleton<IFormsMongoClient, FormsMongoClient>((provider) =>
+            {
+                string connString = builder.Configuration.GetConnectionString("MongoConnectionString");
+
+                return new FormsMongoClient(connString);
+            });
+        }
+
+        static void AddWebApi(WebApplicationBuilder builder)
+        {
+            // Add services to the container.
+            builder.Services.AddControllers();
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+        }
+
+        static void AddMediatR(WebApplicationBuilder builder)
+        {
+            builder.Services.AddMediatR(
+                typeof(MediatorHandlersRef)
+            );
+        }
     }
 }
