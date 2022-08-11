@@ -10,9 +10,7 @@ namespace MongoDemo.MediatorHandlers.Features.Forms.Shared
         public string FormName { get; init; }
         public string FormType { get; init; }
 
-        public List<Form.Section> Sections { get; init; }
-
-        public FormResponseDto() { }
+        public List<FormSectionDto> Sections { get; init; }
 
         public FormResponseDto(Form form)
         {
@@ -21,7 +19,9 @@ namespace MongoDemo.MediatorHandlers.Features.Forms.Shared
             Revision = form.Revision;
             FormName = form.FormName;
             FormType = form.FormType;
-            Sections = form.Sections;
+            Sections = form.Sections
+                .Select(s => new FormSectionDto(s))
+                .ToList();
         }
     }
 }

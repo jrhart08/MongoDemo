@@ -21,6 +21,7 @@ namespace MongoDemo.MediatorHandlers.Features.Forms.SaveForm
 
             var newform = new Form
             {
+                // similar to EF, we leave the Id empty and let IMongoClient generate it
                 FormName = request.FormName,
                 FormType = request.FormType,
                 Sections = request.Sections,

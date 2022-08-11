@@ -21,6 +21,9 @@ namespace MongoDemo.Data.Entities.Forms
         [BsonElement("revision")]
         public int Revision { get; set; }
 
+        [BsonElement("isDeleted")]
+        public bool IsDeleted { get; set; }
+
         [BsonElement("sections")]
         public List<Section> Sections { get; set; }
 
