@@ -21,13 +21,5 @@ namespace MongoDemo.WebApi.Controllers
         [HttpGet("databases")]
         public async Task<ListDatabasesResponse> ListDatabases()
             => await _mediator.Send(new ListDatabasesRequest());
-
-        [HttpGet("forms")]
-        public async Task<GetFormsResponse> GetForms([FromQuery] GetFormsRequest request)
-            => await _mediator.Send(request);
-
-        [HttpGet("forms/{FormLinkId}/latest")]
-        public async Task<GetLatestFormResponse> GetLatestForm([FromRoute] GetLatestFormRequest request)
-            => await _mediator.Send(request);
     }
 }
