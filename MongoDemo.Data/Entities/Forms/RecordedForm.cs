@@ -22,9 +22,11 @@ namespace MongoDemo.Data.Entities.Forms
 
         public class Answer
         {
-            [BsonElement("question")]
-            public string Question { get; set; }
-            
+            public ObjectId Id { get; set; }
+
+            [BsonElement("questionId")]
+            public string QuestionId { get; set; }
+
             [BsonElement("answer")]
             public string AnswerText { get; set; }
         }

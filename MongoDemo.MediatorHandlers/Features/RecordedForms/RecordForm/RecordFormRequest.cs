@@ -18,7 +18,7 @@ namespace MongoDemo.MediatorHandlers.Features.RecordedForms.RecordForm
 
         public class RecordedAnswer
         {
-            public string Question { get; set; }
+            public string QuestionId { get; set; }
             public string Answer { get; set; }
         }
     }

@@ -32,7 +32,7 @@ namespace MongoDemo.MediatorHandlers.Features.RecordedForms.RecordForm
             var answers = request.Answers
                 .Select(a => new RecordedForm.Answer
                 {
-                    Question = a.Question,
+                    QuestionId = a.QuestionId,
                     AnswerText = a.Answer,
                 })
                 .ToList();

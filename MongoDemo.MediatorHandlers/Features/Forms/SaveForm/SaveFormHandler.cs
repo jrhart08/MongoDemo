@@ -3,6 +3,7 @@ using MongoDB.Driver;
 using MongoDemo.Data;
 using MongoDemo.Data.Entities.Forms;
 using MongoDemo.MediatorHandlers.Features.Forms.Shared;
+using shortid;
 
 namespace MongoDemo.MediatorHandlers.Features.Forms.SaveForm
 {
@@ -24,7 +25,7 @@ namespace MongoDemo.MediatorHandlers.Features.Forms.SaveForm
                 // similar to EF, we leave the Id empty and let IMongoClient generate it
                 FormName = request.FormName,
                 FormType = request.FormType,
-                Sections = request.Sections,
+                Sections = request.Sections.Select(ToFormSection).ToList(),
                 Revision = revision,
                 FormLinkId = formLinkId,
             };
@@ -55,5 +56,19 @@ namespace MongoDemo.MediatorHandlers.Features.Forms.SaveForm
 
             return (revision, request.FormLinkId);
         }
+
+        static Form.Section ToFormSection(SaveFormRequest.SaveSectionRequest section) => new Form.Section
+        {
+            ShortId = ShortId.Generate(),
+            SectionName = section.SectionName,
+            Questions = section.Questions
+                .Select(question => new Form.Question
+                {
+                    ShortId = ShortId.Generate(),
+                    QuestionText = question.QuestionText,
+                    Type = question.QuestionType,
+                })
+                .ToList(),
+        };
     }
 }

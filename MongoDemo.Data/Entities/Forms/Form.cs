@@ -6,7 +6,7 @@ namespace MongoDemo.Data.Entities.Forms
 {
     public class Form
     {
-        // BSON id
+        [BsonId]
         public ObjectId Id { get; set; }
 
         [BsonElement("formLinkId")]
@@ -37,6 +37,9 @@ namespace MongoDemo.Data.Entities.Forms
 
         public class Section
         {
+            [BsonElement("_id")]
+            public string ShortId { get; set; }
+
             [BsonElement("sectionName")]
             public string SectionName { get; set; }
             
@@ -46,6 +49,9 @@ namespace MongoDemo.Data.Entities.Forms
 
         public class Question
         {
+            [BsonElement("_id")]
+            public string ShortId { get; set; }
+
             [BsonElement("question")]
             public string QuestionText { get; set; }
 

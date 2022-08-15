@@ -9,7 +9,7 @@ namespace MongoDemo.MediatorHandlers.Features.RecordedForms.Shared
 
         public RecordedFormAnswerDto(RecordedForm.Answer answer)
         {
-            Question = answer.Question;
+            Question = answer.QuestionId;
             Answer = answer.AnswerText;
         }
     }
