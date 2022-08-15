@@ -1,5 +1,8 @@
 ﻿using MediatR;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
+using MongoDB.Driver.Core.Operations;
 using MongoDemo.Data;
 using MongoDemo.Data.Entities.Forms;
 using MongoDemo.MediatorHandlers.Features.Forms.Shared;
@@ -17,7 +20,7 @@ namespace MongoDemo.MediatorHandlers.Features.Forms.GetForms
 
         public async Task<GetFormsResponse> Handle(GetFormsRequest request, CancellationToken cancellationToken)
         {
-            var query = BuildQuery(request);
+            var query = await BuildQuery(request);
 
             List<Form> forms = await _mongo
                 .Forms()
@@ -32,10 +35,10 @@ namespace MongoDemo.MediatorHandlers.Features.Forms.GetForms
             };
         }
 
-        static FilterDefinition<Form> BuildQuery(GetFormsRequest request)
+        async Task<FilterDefinition<Form>> BuildQuery(GetFormsRequest request)
         {
             var builder = Builders<Form>.Filter;
-            var query = builder.Empty;
+            FilterDefinition<Form> query = builder.Empty;
 
             if (!string.IsNullOrEmpty(request.FormType))
             {
@@ -47,7 +50,38 @@ namespace MongoDemo.MediatorHandlers.Features.Forms.GetForms
                 query &= builder.Eq(f => f.FormLinkId, request.FormLinkId);
             }
 
+            if (request.Latest)
+            {
+                List<ObjectId> latestFormIds = await GetLatestFormsPerLinkId();
+
+                query &= builder.In(f => f.Id, latestFormIds);
+            }
+
             return query;
+        }
+
+        async Task<List<ObjectId>> GetLatestFormsPerLinkId()
+        {
+            var latestFormIdResults = await _mongo
+                .Forms()
+                .Aggregate(new BsonDocumentStagePipelineDefinition<Form, BsonDocument>(new[]
+                {
+                    new BsonDocument("$sort", new BsonDocument
+                    {
+                        { "formLinkId", 1 },
+                        { "revision", -1 }
+                    }),
+                    new BsonDocument("$group", new BsonDocument
+                    {
+                        { "_id", "$formLinkId" },
+                        { "latestFormId", new BsonDocument("$first", "$_id") }
+                    })
+                }))
+                .ToListAsync();
+
+            return latestFormIdResults
+                .Select(x => x.GetElement("latestFormId").Value.AsObjectId)
+                .ToList();
         }
     }
 }

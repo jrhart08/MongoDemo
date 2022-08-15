@@ -7,6 +7,7 @@ namespace MongoDemo.MediatorHandlers.Features.Forms.GetForms
     {
         public string? FormType { get; init; }
         public string? FormLinkId { get; init; }
+        public bool Latest { get; set; }
     }
     
     public class GetFormsResponse

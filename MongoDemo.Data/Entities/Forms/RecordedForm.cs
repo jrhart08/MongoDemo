@@ -22,7 +22,8 @@ namespace MongoDemo.Data.Entities.Forms
 
         public class Answer
         {
-            public ObjectId Id { get; set; }
+            [BsonElement("_id")]
+            public string ShortId { get; set; }
 
             [BsonElement("questionId")]
             public string QuestionId { get; set; }
