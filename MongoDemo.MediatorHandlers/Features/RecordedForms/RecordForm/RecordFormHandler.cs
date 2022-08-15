@@ -3,6 +3,7 @@ using MongoDB.Bson;
 using MongoDemo.Data;
 using MongoDemo.Data.Entities.Forms;
 using MongoDemo.MediatorHandlers.Features.RecordedForms.Shared;
+using shortid;
 
 namespace MongoDemo.MediatorHandlers.Features.RecordedForms.RecordForm
 {
@@ -17,7 +18,7 @@ namespace MongoDemo.MediatorHandlers.Features.RecordedForms.RecordForm
 
         public async Task<RecordFormResponse> Handle(RecordFormRequest request, CancellationToken cancellationToken)
         {
-            var recordedForm = ToRecordedForm(request);;
+            var recordedForm = ToRecordedForm(request);
 
             await _mongo.RecordedForms().InsertOneAsync(recordedForm, null, cancellationToken);
 
@@ -27,11 +28,12 @@ namespace MongoDemo.MediatorHandlers.Features.RecordedForms.RecordForm
             };
         }
 
-        private RecordedForm ToRecordedForm(RecordFormRequest request)
+        RecordedForm ToRecordedForm(RecordFormRequest request)
         {
             var answers = request.Answers
                 .Select(a => new RecordedForm.Answer
                 {
+                    ShortId = ShortId.Generate(),
                     QuestionId = a.QuestionId,
                     AnswerText = a.Answer,
                 })
